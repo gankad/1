@@ -1,7 +1,6 @@
 ﻿<?php
 
 // Replace this with your own email address
-$siteOwnersEmail = 'sales@terraverde.in';
 
 
 if($_POST) {
@@ -10,6 +9,8 @@ if($_POST) {
    $email = trim(stripslashes($_POST['contactEmail']));
    $subject = trim(stripslashes($_POST['contactSubject']));
    $contact_message = trim(stripslashes($_POST['contactMessage']));
+   $siteOwnersEmail = "sales@terraverde.in";
+
 
    // Check Name
 	if (strlen($name) < 2) {
@@ -20,31 +21,31 @@ if($_POST) {
 		$error['email'] = "Please enter a valid email address.";
 	}
 	// Check Message
-	if (strlen($contact_message) < 15) {
-		$error['message'] = "Please enter your message. It should have at least 15 characters.";
+	if (strlen($contact_message) < 5) {
+		$error['message'] = "Please enter your message. It should have at least 5 characters.";
 	}
    // Subject
 	if ($subject == '') { $subject = "Contact Form Submission"; }
 
 
    // Set Message
-   $message .= "Email from: " . $name . "<br />";
-	$message .= "Email address: " . $email . "<br />";
-   $message .= "Message: <br />";
-   $message .= $contact_message;
-   $message .= "<br /> ----- <br /> This email was sent from your site's contact form. <br />";
+   $message = "Email from:" . $name . "<br />";
+	$message = "Email address:" . $email . "<br />";
+   $message = "Message: <br />";
+   $message = $contact_message;
+   $message = "<br /> ----- <br /> This email was sent from your site's contact form. <br />";
 
    // Set From: header
-   $from =  $name . " <" . $email . ">";
+   $from =  $name . "<" . $email . ">";
 
    // Email Headers
-	$headers = "From: " . $from . "\r\n";
-	$headers .= "Reply-To: ". $email . "\r\n";
- 	$headers .= "MIME-Version: 1.0\r\n";
-	$headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
+	$headers = "From:" . $from . "\r\n";
+	$headers = "Reply-To:" . $email . "\r\n";
+ 	$headers = "MIME-Version: 1.0\r\n";
+	$headers = "Content-Type: text/html; charset=ISO-8859-1\r\n";
 
 
-   if (!$error) {
+   if (!isset($error))   {
 
       ini_set("sendmail_from", $siteOwnersEmail); // for windows server
       $mail = mail($siteOwnersEmail, $subject, $message, $headers);
@@ -57,8 +58,8 @@ if($_POST) {
 	else {
 
 		$response = (isset($error['name'])) ? $error['name'] . "<br /> \n" : null;
-		$response .= (isset($error['email'])) ? $error['email'] . "<br /> \n" : null;
-		$response .= (isset($error['message'])) ? $error['message'] . "<br />" : null;
+		$response = (isset($error['email'])) ? $error['email'] . "<br /> \n" : null;
+		$response = (isset($error['message'])) ? $error['message'] . "<br />" : null;
 
 		echo $response;
 
